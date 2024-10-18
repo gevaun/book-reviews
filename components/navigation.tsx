@@ -18,11 +18,12 @@ export default function Navigation() {
       key={href}
       href={href}
       className={clsx(
-        "tranistion-all duration-200 delay-50 opacity-75 hover:opacity-100 px-4 py-1",
+        "tranistion-all duration-200 delay-50 px-4 py-1",
         {
           "opacity-100 rounded-lg bg-zinc-100 dark:bg-zinc-900":
             pathname === href,
-        }
+        },
+        { "opacity-75 hover:opacity-100": pathname !== href }
       )}
     >
       {label}
