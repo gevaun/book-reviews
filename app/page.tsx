@@ -1,10 +1,5 @@
 import Image from "next/image";
-import { Dancing_Script, Pacifico } from "next/font/google";
-
-const dancingScript = Dancing_Script({
-  weight: "700",
-  subsets: ["latin"],
-});
+import { Pacifico } from "next/font/google";
 
 const pacifico = Pacifico({
   weight: "400",
