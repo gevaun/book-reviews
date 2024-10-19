@@ -1,5 +1,6 @@
 import client from "@/app/lib/wix";
 import { BookOpenIcon, ArrowDownRightIcon } from "@heroicons/react/16/solid";
+import { Button } from "@headlessui/react";
 
 export default async function Books() {
   const books = await client.items
@@ -8,10 +9,9 @@ export default async function Books() {
     })
     .find()
     .then((res) => res.items.map((book) => book.data));
-  
 
   return (
-    <div>
+    <div className="space-y-4">
       <h1 className="text-xl font-medium mb-4">Books</h1>
       <div className="grid grid-cols-4 gap-4">
         {books.map((book) => (
@@ -38,6 +38,14 @@ export default async function Books() {
             </a>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center">
+        <Button
+          type="button"
+          className="py-2.5 px-6 text-sm border border-gray-300 rounded-lg shadow-xs bg-white font-semibold text-gray-900 transition-all duration-500 hover:bg-zinc-100 group"
+        >
+          Add Book <ArrowDownRightIcon className="w-4 inline group-hover:translate-x-1 transition-all duration-200 delay-75" />
+        </Button>
       </div>
     </div>
   );
