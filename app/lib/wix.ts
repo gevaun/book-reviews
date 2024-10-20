@@ -11,3 +11,7 @@ const client = createClient({
 });
 
 export default client;
+
+export function convertWixImageToUrl(wixImageUrl: string) {
+  return `https://static.wixstatic.com/media/${wixImageUrl.split("/")[3]}` 
+}
