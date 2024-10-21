@@ -1,5 +1,11 @@
 import Image from "next/image";
 import { Pacifico } from "next/font/google";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowDownRightIcon,
+  ArrowRightCircleIcon,
+} from "@heroicons/react/16/solid";
+import Link from "next/link";
 
 const pacifico = Pacifico({
   weight: "400",
@@ -7,6 +13,7 @@ const pacifico = Pacifico({
 });
 
 export default function Home() {
+
   return (
     <div className="space-y-4">
       <main className="flex flex-col gap-8 row-start-2 items-center">
@@ -35,6 +42,16 @@ export default function Home() {
               </p>
             </div>
           </div>
+        </div>
+        <div className="flex justify-center p-10">
+          <Link
+            href="/books"
+            type="button"
+            className="py-2.5 px-6 text-sm border border-gray-300 rounded-xl shadow-xs bg-zinc-200 font-semibold text-gray-900 transition-all duration-500 hover:bg-zinc-100 group"
+          >
+            Expore Books{" "}
+            <ArrowRightCircleIcon className="w-4 inline group-hover:translate-x-1 transition-all duration-200 delay-75" />
+          </Link>
         </div>
       </main>
     </div>
