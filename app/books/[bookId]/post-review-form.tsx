@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+// import { Button } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,6 +16,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { StarIcon } from "lucide-react";
 import client from "@/app/lib/wix";
+import { useToast } from "@/hooks/use-toast";
+import { title } from "process";
+import { Loader2 } from "lucide-react";
 
 export default function PostReviewForm({ bookId }: { bookId: string }) {
   const initialReviewForm = {
@@ -22,25 +26,45 @@ export default function PostReviewForm({ bookId }: { bookId: string }) {
     rating: 0,
     review: "",
   };
-
   const [reviewForm, setReviewForm] = useState(initialReviewForm);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   async function handleReviewSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log(reviewForm);
-    // Here you would typically send the review to your backend
-    await client.items.insertDataItem({
-      dataCollectionId: "Reviews",
-      dataItem: {
-        data: {
-          ...reviewForm,
-          bookId: bookId,
+    setIsLoading(true);
+    client.items
+      .insertDataItem({
+        dataCollectionId: "Reviews",
+        dataItem: {
+          data: {
+            ...reviewForm,
+            bookId: bookId,
+          },
         },
-      },
-    });
+      })
+      .then(() => {
+        setReviewForm(initialReviewForm);
+        toast({
+          title: "Your review has been submitted",
+          description: "Thank you for your feedback!",
+          variant: "default",
+        });
+      })
+      .catch(() => {
+        toast({
+          title: "Error",
+          description:
+            "Something went wrong. Please try again.",
+          variant: "destructive",
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
 
     // Reset form
-    // setReviewForm(initialReviewForm);
   }
 
   return (
@@ -78,11 +102,10 @@ export default function PostReviewForm({ bookId }: { bookId: string }) {
                 {[1, 2, 3, 4, 5].map((star) => (
                   <StarIcon
                     key={star}
-                    className={`h-6 w-6 cursor-pointer ${
-                      star <= reviewForm.rating
+                    className={`h-6 w-6 cursor-pointer ${star <= reviewForm.rating
                         ? "text-yellow-400 fill-current"
                         : "text-gray-300"
-                    }`}
+                      }`}
                     onClick={() =>
                       setReviewForm({ ...reviewForm, rating: star })
                     }
@@ -107,7 +130,18 @@ export default function PostReviewForm({ bookId }: { bookId: string }) {
                 rows={5}
               />
             </div>
-            <Button type="submit">Submit Review</Button>
+            <Button
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                  Submitting...
+                </>
+              ) : (
+                "Post Review"
+              )}
+            </Button>
           </form>
         </CardContent>
       </Card>
