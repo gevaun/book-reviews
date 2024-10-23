@@ -9,13 +9,14 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Book } from "lucide-react";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
+import AddBookDialog from "./add-book-dialog";
+
 
 export const GetServerSideProps = async ({
   searchParams,
 }: {
   searchParams: { search?: string };
 }) => {
-  console.log(searchParams.search);
   const dataCollectionId = "Books";
   const books = await client.items
     .queryDataItems({
@@ -33,7 +34,6 @@ export default async function Books({
 }: {
   searchParams: { search?: string };
 }) {
-  console.log(searchParams.search);
   const dataCollectionId = "Books";
   const books = await client.items
     .queryDataItems({
@@ -44,24 +44,25 @@ export default async function Books({
     .find()
     .then((res) => res.items.map((book) => book.data));
 
+  console.log(books)
   const bookElements = books.map((book) => (
     <Link href={`/books/${book?._id}`} key={book?._id}>
       <Card className="hover:shadow-lg transition-shadow">
         <CardContent className="flex items-center p-4">
-          {book?.coverImage ? (
+          {book?.cover ? (
             <Image
               src={
-                book.coverImage.includes("static.")
-                  ? book.coverImage
-                  : convertWixImageToUrl(book.coverImage)
+                book?.cover?.includes("static")
+                ? book?.cover
+                : convertWixImageToUrl(book?.cover)
               }
               alt={`Book cover of ${book?.title}`}
-              className="h-[300px] w-[200px]  object-cover float-left rounded-md"
-              height={300}
-              width={200}
+              className="w-20 h-30 object-cover float-left rounded-md mr-4"
+              height={100}
+              width={80}
             />
           ) : (
-            <div className="w-20 h-30 object-cover mr-4">
+            <div className="w-20 h-30 object-cover ">
               <Book className="w-12 h-12" />
             </div>
           )}
@@ -96,7 +97,6 @@ export default async function Books({
     </div>
   );
 
-  console.log(books.length)
   return (
     <div className="space-y-4">
       <div className="flex justify-between">
@@ -116,8 +116,6 @@ export default async function Books({
               type="text"
               name="search"
               placeholder="Search books..."
-              // value={search}
-              // onChange={(e) => setSearchTerm(e.target.value)}
               className="flex-grow"
             />
             <Button type="submit" className="group" variant="secondary">
@@ -127,10 +125,7 @@ export default async function Books({
           </form>
         </div>
         <div className="self-start">
-          <Button type="button" className="group">
-            Add Book{" "}
-            <ArrowDownRightIcon className="w-4 inline group-hover:translate-x-1 transition-all duration-200 delay-75" />
-          </Button>
+          <AddBookDialog />
         </div>
       </div>
       <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
