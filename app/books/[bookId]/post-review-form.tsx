@@ -32,7 +32,7 @@ export default function PostReviewForm({ bookId }: { bookId: string }) {
 
   async function handleReviewSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log(reviewForm);
+    console.log("Form" + reviewForm);
     setIsLoading(true);
     client.items
       .insertDataItem({
@@ -44,27 +44,26 @@ export default function PostReviewForm({ bookId }: { bookId: string }) {
           },
         },
       })
-      .then(() => {
-        setReviewForm(initialReviewForm);
-        toast({
-          title: "Your review has been submitted",
-          description: "Thank you for your feedback!",
-          variant: "default",
-        });
-      })
-      .catch(() => {
-        toast({
-          title: "Error",
-          description:
-            "Something went wrong. Please try again.",
-          variant: "destructive",
-        });
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-
-    // Reset form
+      // .then(() => {
+      //   setReviewForm(initialReviewForm);
+      //   toast({
+      //     title: "Your review has been submitted",
+      //     description: "Thank you for your feedback!",
+      //     variant: "default",
+      //   });
+      // })
+      // .catch((error) => {
+      //   console.error(error);
+      //   toast({
+      //     title: "Error",
+      //     description:
+      //       "Something went wrong. Please try again.",
+      //     variant: "destructive",
+      //   });
+      // })
+      // .finally(() => {
+      //   setIsLoading(false);
+      // });
   }
 
   return (

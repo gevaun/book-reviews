@@ -10,20 +10,20 @@ import {
 } from "@/components/ui/card";
 import { BookOpenIcon } from "@heroicons/react/16/solid";
 import PostReviewForm from "./post-review-form";
+import BookReviewPage from "./reviews";
+import BackButton from "@/components/books/back-button";
 
 export default async function Book({ params }: { params: { bookId: string } }) {
-  console.log(typeof params.bookId, params.bookId);
   const { data: book } = await client.items.getDataItem(params.bookId, {
     dataCollectionId: "Books",
     consistentRead: true,
   });
 
-  console.log(book?.coverImage);
-
   return (
-    <div>
-      <Card className="mb-8">
-        <CardHeader>
+    <div className="space-y-8">
+      <BackButton />
+      <Card>
+        <CardHeader>``
           <CardTitle className="text-3xl font-bold">{book?.title}</CardTitle>
           <CardDescription>by {book?.author}</CardDescription>
         </CardHeader>
@@ -58,11 +58,10 @@ export default async function Book({ params }: { params: { bookId: string } }) {
             </ul>
           </div>
         </CardContent>
-        <CardFooter>
-        </CardFooter>
+        <CardFooter></CardFooter>
       </Card>
-          <PostReviewForm 
-          bookId={book?._id}/>
+      <PostReviewForm bookId={book?._id} />
+      <BookReviewPage bookId={book?._id} />
     </div>
   );
 }
