@@ -44,26 +44,26 @@ export default function PostReviewForm({ bookId }: { bookId: string }) {
           },
         },
       })
-      // .then(() => {
-      //   setReviewForm(initialReviewForm);
-      //   toast({
-      //     title: "Your review has been submitted",
-      //     description: "Thank you for your feedback!",
-      //     variant: "default",
-      //   });
-      // })
-      // .catch((error) => {
-      //   console.error(error);
-      //   toast({
-      //     title: "Error",
-      //     description:
-      //       "Something went wrong. Please try again.",
-      //     variant: "destructive",
-      //   });
-      // })
-      // .finally(() => {
-      //   setIsLoading(false);
-      // });
+      .then(() => {
+        setReviewForm(initialReviewForm);
+        toast({
+          title: "Your review has been submitted",
+          description: "Thank you for your feedback!",
+          variant: "default",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        toast({
+          title: "Error",
+          description:
+            "Something went wrong. Please try again.",
+          variant: "destructive",
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
