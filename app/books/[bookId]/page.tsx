@@ -1,5 +1,6 @@
 import Image from "next/image";
-import client, { convertWixImageToUrl } from "@/app/lib/wix";
+import  { convertWixImageToUrl } from "@/app/lib/wix-client";
+import { getServerClient } from "@/app/lib/wix";
 import {
   Card,
   CardContent,
@@ -14,7 +15,7 @@ import BookReviewPage from "./reviews";
 import BackButton from "@/components/books/back-button";
 
 export default async function Book({ params }: { params: { bookId: string } }) {
-  const { data: book } = await client.items.getDataItem(params.bookId, {
+  const { data: book } = await getServerClient().items.getDataItem(params.bookId, {
     dataCollectionId: "Books",
     consistentRead: true,
   });

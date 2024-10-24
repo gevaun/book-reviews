@@ -3,15 +3,11 @@ import { items } from "@wix/data";
 
 const clientId = process.env.NEXT_PUBLIC_WIX_CLIENT_ID || 'defaultClientId';
 
-const client = createClient({
-  modules: { items },
-  auth: OAuthStrategy({
-    clientId: clientId,
-  }),
-});
-
-export default client;
-
-export function convertWixImageToUrl(wixImageUrl: string) {
-  return `https://static.wixstatic.com/media/${wixImageUrl.split("/")[3]}` 
+export function getServerClient() {
+  return createClient({
+    modules: { items },
+    auth: OAuthStrategy({
+      clientId: clientId,
+    }),
+  });
 }

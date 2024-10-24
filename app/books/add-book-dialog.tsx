@@ -14,9 +14,8 @@ import { ArrowDownRightIcon } from "@heroicons/react/16/solid";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import client from "../lib/wix";
+import { getServerClient } from "@/app/lib/wix";
 import { useRouter } from "next/navigation";
-import { redirect } from "next/dist/server/api-utils";
 import { toast } from "@/hooks/use-toast";
 
 export default function AddBookDialog() {
@@ -34,14 +33,14 @@ export default function AddBookDialog() {
       [e.target.name]: e.target.value,
     });
   }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const title = formData.get("title");
     const author = formData.get("author");
     const description = formData.get("description");
-    console.log(title);
-    const response  = await client.items.insertDataItem({
+    await getServerClient().items.insertDataItem({
       dataCollectionId: "Books",
       dataItem: {
         data: {
@@ -50,23 +49,22 @@ export default function AddBookDialog() {
           description,
         },
       },
-    });
-    router.push(`/books/${response.dataItem?._id}`);
-    // .then(() => {
-    //     setNewBook(initialNewBook);
-    //     toast({
-    //         title: "New book created",
-    //         description: "Thank you for creating the book"
-    //     })
-    //     router.push(`/books/${data._id}`);        
-    // })
-    // .catch((error) => {
-    //     toast({
-    //         title: "Error",
-    //         description: "Something went wrong",
-    //         variant: "destructive"
-    //     })
-    // })
+    })
+    .then((response) => {
+        setNewBook(initialNewBook);
+        toast({
+            title: "New book created",
+            description: "Thank you for creating the book"
+        })
+        router.push(`/books/${response.dataItem?._id}`);
+    })
+    .catch((error) => {
+        toast({
+            title: "Error",
+            description: `Something went wrong ${error.message}`,
+            variant: "destructive"
+        })
+    })
     //  redirect
   }
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import { BookOpenIcon, ArrowDownRightIcon } from "@heroicons/react/16/solid";
+import { loginAction } from "@/app/actions";
 
 const links = [
   { href: "/books", label: "Books" },
@@ -39,13 +40,12 @@ export default function Navigation() {
           </Link>
           <div className="space-x-2">{linkElements}</div>
         </div>
-        <Link
-          href="login/"
-          className="px-4 py-1 self-center rounded-lg bg-zinc-100 dark:bg-zinc-900 group"
-        >
-          Login{" "}
-          <ArrowDownRightIcon className="w-4 inline group-hover:translate-x-1 transition-all duration-200 delay-75" />
-        </Link>
+        <form action={loginAction} className="self-center">
+          <button className="px-4 py-1 self-center rounded-lg bg-zinc-100 dark:bg-zinc-900 group">
+            Login{" "}
+            <ArrowDownRightIcon className="w-4 inline group-hover:translate-x-1 transition-all duration-200 delay-75" />
+          </button>
+        </form>
       </div>
     </nav>
   );

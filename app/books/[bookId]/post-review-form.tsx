@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { StarIcon } from "lucide-react";
-import client from "@/app/lib/wix";
+import { getServerClient } from "@/app/lib/wix";
 import { useToast } from "@/hooks/use-toast";
 import { title } from "process";
 import { Loader2 } from "lucide-react";
@@ -33,7 +33,7 @@ export default function PostReviewForm({ bookId }: { bookId: string }) {
   async function handleReviewSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsLoading(true);
-    client.items
+    getServerClient().items
       .insertDataItem({
         dataCollectionId: "Reviews",
         dataItem: {

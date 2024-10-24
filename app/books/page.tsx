@@ -1,33 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-
-import client, { convertWixImageToUrl } from "@/app/lib/wix";
-import { ArrowDownRightIcon } from "@heroicons/react/16/solid";
+import { getServerClient } from "@/app/lib/wix";
+// import { convertWixImageToUrl } from "@/app/lib/wix-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Book } from "lucide-react";
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import AddBookDialog from "./add-book-dialog";
-
-
-export const GetServerSideProps = async ({
-  searchParams,
-}: {
-  searchParams: { search?: string };
-}) => {
-  const dataCollectionId = "Books";
-  const books = await client.items
-    .queryDataItems({
-      dataCollectionId,
-      // consistentRead: true, // Optional, and we do this to ensure we get the latest data
-    })
-    // .startsWith("title", searchParams.search ?? "")
-    .find()
-    .then((res) => res.items.map((book) => book.data));
-  return { props: { books } };
-};
 
 export default async function Books({
   searchParams,
@@ -35,8 +15,8 @@ export default async function Books({
   searchParams: { search?: string };
 }) {
   const dataCollectionId = "Books";
-  const books = await client.items
-    .queryDataItems({
+  const books = await getServerClient()
+    .items.queryDataItems({
       dataCollectionId,
       // consistentRead: true, // Optional, and we do this to ensure we get the latest data
     })
@@ -44,7 +24,10 @@ export default async function Books({
     .find()
     .then((res) => res.items.map((book) => book.data));
 
-  console.log(books)
+  function convertWixImageToUrl(wixImageUrl: string) {
+    return `https://static.wixstatic.com/media/${wixImageUrl.split("/")[3]}`;
+  }
+
   const bookElements = books.map((book) => (
     <Link href={`/books/${book?._id}`} key={book?._id}>
       <Card className="hover:shadow-lg transition-shadow">
@@ -53,8 +36,8 @@ export default async function Books({
             <Image
               src={
                 book?.cover?.includes("static")
-                ? book?.cover
-                : convertWixImageToUrl(book?.cover)
+                  ? book?.cover
+                  : convertWixImageToUrl(book?.cover)
               }
               alt={`Book cover of ${book?.title}`}
               className="w-20 h-30 object-cover float-left rounded-md mr-4"
@@ -82,18 +65,14 @@ export default async function Books({
   const bookNotFoundElement = (
     <div className="p-6">
       <div className="flex justify-center">
-      <Image
-        src="/undraw_lost_re_xqjt.svg"
-        alt="No books found"
-        width={300}
-        height={200}
-      />
-        
+        <Image
+          src="/undraw_lost_re_xqjt.svg"
+          alt="No books found"
+          width={300}
+          height={200}
+        />
       </div>
-      <p className="text-xl text-center my-4">
-      No books found...
-      </p>
-
+      <p className="text-xl text-center my-4">No books found...</p>
     </div>
   );
 
@@ -133,7 +112,10 @@ export default async function Books({
         {books.length !== 0 ? (
           bookElements
         ) : (
-          <div className="md:col-span-3 lg:col-span-4"> {bookNotFoundElement} </div>
+          <div className="md:col-span-3 lg:col-span-4">
+            {" "}
+            {bookNotFoundElement}{" "}
+          </div>
         )}
       </div>
     </div>
