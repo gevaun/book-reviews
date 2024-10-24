@@ -12,8 +12,6 @@ export default async function ReviewList({ bookId }: { bookId: string }) {
     .find()
     .then((response) => response.items.map((item) => item.data));
 
-  console.log(reviews);
-
   const reviewElements = reviews.map((review) => (
     <Card key={review?.id}>
       <CardHeader>

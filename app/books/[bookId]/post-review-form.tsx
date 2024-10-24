@@ -32,7 +32,6 @@ export default function PostReviewForm({ bookId }: { bookId: string }) {
 
   async function handleReviewSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("Form" + reviewForm);
     setIsLoading(true);
     client.items
       .insertDataItem({
