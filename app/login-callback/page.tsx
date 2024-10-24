@@ -12,7 +12,7 @@ export default function LoginCallbackPage() {
     useEffect(() => {
         const url = window.location.href;
         loginCallbackAction(url).then(() => router.push("/"));
-    }, [])
+    },)
 
 
     // Show loading screen while authenticating
