@@ -17,6 +17,7 @@ export async function getMember() {
   const client = getServerClient();
   
   if (!client.auth.loggedIn()) {
+    console.log('No member logged in');
     return undefined;
   }
   

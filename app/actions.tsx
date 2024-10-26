@@ -1,6 +1,7 @@
 "use server";
 
-import { getServerClient } from "@/app/lib/wix";
+import { getServerClient } from "@/lib/wix";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -14,5 +15,15 @@ export async function loginAction() {
   // Store the data in cookies on the users browser to verify the redirect was successful
   cookies().set("oauthRedirectData", JSON.stringify(data));
   const { authUrl } = await getServerClient().auth.getAuthUrl(data);
+  revalidatePath('/');
   redirect(authUrl);
+}
+
+export async function logoutAction() {
+  const publicHost = process.env.NEXT_PUBLIC_URL;
+  const client = getServerClient();
+  const { logoutUrl } = await client.auth.logout(publicHost)
+  cookies().delete("session");
+  revalidatePath('/');
+  redirect(logoutUrl);
 }
