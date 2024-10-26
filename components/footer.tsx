@@ -1,4 +1,3 @@
-import Link from "next/link"
 export default function Footer() {
     return (
       <footer className="bg-primary text-primary-foreground mt-auto">

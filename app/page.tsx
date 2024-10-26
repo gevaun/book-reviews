@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { Pacifico } from "next/font/google";
-import { Button } from "@/components/ui/button";
 import {
-  ArrowDownRightIcon,
   ArrowRightCircleIcon,
 } from "@heroicons/react/16/solid";
 import Link from "next/link";

@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-// import { Button } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -17,7 +15,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { StarIcon } from "lucide-react";
 import { getServerClient } from "@/lib/wix";
 import { useToast } from "@/hooks/use-toast";
-import { title } from "process";
 import { Loader2 } from "lucide-react";
 
 export default function PostReviewForm({ bookId }: { bookId: string }) {
