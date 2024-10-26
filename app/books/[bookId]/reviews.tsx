@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StarIcon } from "lucide-react";
-import {getServerClient} from "@/app/lib/wix";
+import {getServerClient} from "@/lib/wix";
 
 export default async function ReviewList({ bookId }: { bookId: string }) {
   const reviews = await getServerClient().items

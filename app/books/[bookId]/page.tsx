@@ -1,6 +1,6 @@
 import Image from "next/image";
-import  { convertWixImageToUrl } from "@/app/lib/wix-client";
-import { getServerClient } from "@/app/lib/wix";
+import  { convertWixImageToUrl } from "@/lib/wix-client";
+import { getServerClient } from "@/lib/wix";
 import {
   Card,
   CardContent,
