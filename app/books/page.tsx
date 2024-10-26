@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { getServerClient } from "@/app/lib/wix";
+import { getServerClient } from "@/lib/wix";
 // import { convertWixImageToUrl } from "@/app/lib/wix-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

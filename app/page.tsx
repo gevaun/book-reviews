@@ -24,7 +24,6 @@ export default function Home() {
             alt="Next.js logo"
             width={380}
             height={380}
-            priority
           />
           <div className="self-center text-center justify-center rounded-2xl py-4 px-10 bg-zinc-50 dark:bg-zinc-900">
             <h1 className="text-4xl font-bold mb-2">
